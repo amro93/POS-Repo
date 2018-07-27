@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks><!--netcoreapp2.0;-->netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\POS.DAL\POS.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AppLogic\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+</Project>
