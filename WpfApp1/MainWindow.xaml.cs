@@ -1,6 +1,4 @@
-﻿//using POS.BLL.DataLogic;
-//using POS.DAL.DBContexts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POS_APP.WPF.Views
+namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,18 +23,6 @@ namespace POS_APP.WPF.Views
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //var ctx = new DataContext();
-            //var x = new PricingLogic(ctx);
-            //var y = new ProductLogic(ctx);
-            //x.TestDb();
-            //x.GetPricings();
-
-            //y.TestDb();
-            //y.GetProducts();
         }
     }
 }

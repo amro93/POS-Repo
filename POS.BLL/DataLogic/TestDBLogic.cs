@@ -55,7 +55,6 @@ namespace POS.BLL.DataLogic
         public List<Product> GetProducts()
         {
             var x = base.GetList();
-            Pricing pp = x[1].Pricing;
             return x;
         }
     }

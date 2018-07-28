@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using POS.BLL.DataLogic;
-using POS.DAL.DBContexts;
+﻿using POS.BLL.DataLogic;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

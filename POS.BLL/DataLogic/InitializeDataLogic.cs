@@ -12,14 +12,18 @@ namespace POS.BLL.DataLogic
     {
         public static void MigrateDBAsync()
         {
-            var t = new Task(() => {
-                using (var db = new DataContext())
-                {
-                        db.Database.Migrate();
-                }
-            });
+            using (var db = new DataContext())
+            {
+                db.Database.Migrate();
+            }
+            //var t = new Task(() => {
+            //    using (var db = new DataContext())
+            //    {
+            //            db.Database.Migrate();
+            //    }
+            //});
             //t.RunSynchronously();
-            t.Start();
+            //t.Start();
         }
     }
 }
