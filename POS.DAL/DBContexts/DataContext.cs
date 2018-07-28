@@ -18,6 +18,8 @@ namespace POS.DAL.DBContexts
         #region DBSet
         public DbSet<Product> Products { get; set; }
         public DbSet<Pricing> Pricings { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Company> Companies { get; set; }
         #endregion
 
         #region Constructors
@@ -55,9 +57,8 @@ namespace POS.DAL.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
+            //modelBuilder.Entity<Person>().HasOne(a => a.Client).WithOne(b => b.Person).OnDelete(DeleteBehavior.ClientSetNull);
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Pricing>().HasMany(p => p.Products).WithOne(pp => pp.Pricing);
         } 
         #endregion
     }

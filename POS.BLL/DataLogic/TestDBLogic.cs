@@ -18,7 +18,7 @@ namespace POS.BLL.DataLogic
         public Pricing TestDb()
         {
            var x = repository.Add(new Pricing() { SellingPrice = 10.0f , SpeacialSellingPrice= 9.5f ,
-               Unit = PricingUnit.Piece, Name ="AAA" , BuyingPrice=9});
+               Unit = PricingUnit.Piece , BuyingPrice=9});
             //x.Products.Add(new Product() { Pricing = x, EnterDate = DateTime.Now });
             //repository._context.SaveChanges();
             return x;

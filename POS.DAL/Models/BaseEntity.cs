@@ -5,17 +5,17 @@ using System.Text;
 
 namespace POS.DAL.Models
 {
-    public abstract class BaseIntity
+    public abstract class BaseEntity
     {
         [Key]
         public int Id { get; set; }
-        //public int Name { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModifyDate { get; set; }
 
-        public BaseIntity()
+        public BaseEntity()
         {
             CreationDate = DateTime.Now;
+            ModifyDate = DateTime.Now;
         }
     }
 }
