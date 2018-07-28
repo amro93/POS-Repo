@@ -18,6 +18,7 @@ using POS.DAL.DBContexts;
 using Microsoft.EntityFrameworkCore;
 using POS_APP.UWP.Views;
 using System.Threading.Tasks;
+using POS.BLL.DataLogic;
 
 namespace POS_APP.UWP
 {
@@ -34,13 +35,6 @@ namespace POS_APP.UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            using (var db = new DataContext())
-            {
-                db.Database.Migrate();
-            }
-
-            
         }
 
         /// <summary>
@@ -50,6 +44,9 @@ namespace POS_APP.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //Migrate Database
+            InitializeDataLogic.MigrateDBAsync();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,

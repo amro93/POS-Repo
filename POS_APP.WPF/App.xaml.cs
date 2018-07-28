@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using POS.BLL.DataLogic;
 using POS.DAL.DBContexts;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace POS_APP.WPF
 {
@@ -17,10 +19,12 @@ namespace POS_APP.WPF
     {
         public App()
         {
-            using (var db = new DataContext())
-            {
-                db.Database.Migrate();
-            }
+        }
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            //Migrate Database
+            InitializeDataLogic.MigrateDBAsync();
         }
     }
 }

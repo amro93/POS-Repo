@@ -32,11 +32,9 @@ namespace CourseManagement.BLL.AppLogic
         //}
         public Repository(DataContext context, bool _useLazyLoading = false) 
         {
-            this._context = context;
-            _context = new DataContext(_useLazyLoading);
-            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-            _context.ChangeTracker.AutoDetectChangesEnabled = true;
-            _context.ChangeTracker.LazyLoadingEnabled = true;
+            _context = context;
+            context.ChangeTracker.AutoDetectChangesEnabled = true;
+            context.ChangeTracker.LazyLoadingEnabled = true;
             _dbSet = _context.Set<T>();
         }
         #endregion
@@ -150,7 +148,6 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                
                 _context.Entry<T>(t).State = EntityState.Modified;
                 var bb = _context.SaveChanges();
                 return bb > 0;

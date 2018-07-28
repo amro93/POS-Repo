@@ -34,7 +34,10 @@ namespace POS.DAL.DBContexts
         #region Methods
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseLazyLoadingProxies(_useLazyLoading).UseSqlite("Data Source=POS_data.db");
+            optionsBuilder.UseLazyLoadingProxies(_useLazyLoading)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
+                .UseSqlite("Data Source=POS_data.db");
+
             #region Connection old
 
             //var connection = new SqliteConnection("Data Source=POS_ProtectedData.db");
