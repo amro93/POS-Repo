@@ -24,7 +24,7 @@ namespace POS.DAL.DBContexts
         public DbSet<Pricing> Pricings { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<OrderProductQuantity> ProductQuantities { get; set; }
+        public DbSet<OrderProductQuantity> OrderProductQuantity { get; set; }
         public DbSet<ProductRetailer> ProductRetailers { get; set; }
         public DbSet<Retailer> Retailers { get; set; }
         public DbSet<Store> Stores { get; set; }

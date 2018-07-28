@@ -279,7 +279,7 @@ namespace POS.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductQuantities",
+                name: "OrderProductQuantity",
                 columns: table => new
                 {
                     Quantity = table.Column<float>(nullable: false),
@@ -288,15 +288,15 @@ namespace POS.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductQuantities", x => new { x.ProductId, x.OrderId });
+                    table.PrimaryKey("PK_OrderProductQuantity", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_ProductQuantities_Orders_OrderId",
+                        name: "FK_OrderProductQuantity_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductQuantities_Products_ProductId",
+                        name: "FK_OrderProductQuantity_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -367,6 +367,11 @@ namespace POS.DAL.Migrations
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProductQuantity_OrderId",
+                table: "OrderProductQuantity",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_ClientId",
                 table: "Orders",
                 column: "ClientId");
@@ -380,11 +385,6 @@ namespace POS.DAL.Migrations
                 name: "IX_People_LocationId",
                 table: "People",
                 column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductQuantities_OrderId",
-                table: "ProductQuantities",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductRetailers_ProductId",
@@ -443,7 +443,7 @@ namespace POS.DAL.Migrations
                 name: "Companies");
 
             migrationBuilder.DropTable(
-                name: "ProductQuantities");
+                name: "OrderProductQuantity");
 
             migrationBuilder.DropTable(
                 name: "ProductRetailers");

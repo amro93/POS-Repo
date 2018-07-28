@@ -122,7 +122,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("ProductQuantities");
+                    b.ToTable("OrderProductQuantity");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Person", b =>

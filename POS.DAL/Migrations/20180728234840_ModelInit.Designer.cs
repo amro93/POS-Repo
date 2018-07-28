@@ -9,7 +9,7 @@ using POS.DAL.DBContexts;
 namespace POS.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180728234256_ModelInit")]
+    [Migration("20180728234840_ModelInit")]
     partial class ModelInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,7 +124,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("ProductQuantities");
+                    b.ToTable("OrderProductQuantity");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Person", b =>

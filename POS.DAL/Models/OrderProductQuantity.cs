@@ -7,7 +7,6 @@ namespace POS.DAL.Models
 {
     public class OrderProductQuantity
     {
-        [Required]
         public float Quantity { get; set; }
 
         public long OrderId { get; set; }
