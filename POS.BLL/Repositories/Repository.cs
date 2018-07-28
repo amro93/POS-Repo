@@ -12,20 +12,32 @@ namespace CourseManagement.BLL.AppLogic
     public class Repository<T> : IDisposable, IRepository<T> where T : class
     {
         #region Properties
-        public DbSet<T> Table { get; set; }
-        public DataContext Context { get; set; }
+        internal DbSet<T> _dbSet { get; set; }
+        internal DataContext _context { get; set; }
         #endregion
 
         #region Constructors
-        public Repository()
+        //public Repository()
+        //{
+        //    Context = new DataContext();
+        //    _dbSet = Context.Set<T>();
+        //}
+        //public Repository(bool _useLazyLoading = false)
+        //{
+        //    _context = new DataContext(_useLazyLoading);
+        //    _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+        //    _context.ChangeTracker.AutoDetectChangesEnabled = true;
+        //    _context.ChangeTracker.LazyLoadingEnabled = true;
+        //    _dbSet = _context.Set<T>();
+        //}
+        public Repository(DataContext context, bool _useLazyLoading = false) 
         {
-            Context = new DataContext();
-            Table = Context.Set<T>();
-        }
-        public Repository(DataContext context)
-        {
-            this.Context = context;
-            Table = Context.Set<T>();
+            this._context = context;
+            _context = new DataContext(_useLazyLoading);
+            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+            _context.ChangeTracker.AutoDetectChangesEnabled = true;
+            _context.ChangeTracker.LazyLoadingEnabled = true;
+            _dbSet = _context.Set<T>();
         }
         #endregion
 
@@ -35,7 +47,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return Table;
+                return _dbSet;
             }
             catch (Exception ex)
             {
@@ -47,7 +59,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                var items = await Table.ToListAsync();
+                var items = await _dbSet.ToListAsync();
                 return items.AsQueryable();
             }
             catch (Exception ex)
@@ -60,7 +72,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return Table.Find(Id);
+                return _dbSet.Find(Id);
             }
             catch (Exception ex)
             {
@@ -72,7 +84,7 @@ namespace CourseManagement.BLL.AppLogic
             try
             {
                 return (from id in idList 
-                       select Table.Find(id)).ToList<T>();
+                       select _dbSet.Find(id)).ToList<T>();
             }
             catch (Exception ex)
             {
@@ -84,7 +96,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return await Table.FindAsync(Id);
+                return await _dbSet.FindAsync(Id);
             }
             catch (Exception ex)
             {
@@ -96,8 +108,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                Table.Add(t);
-                return Context.SaveChanges() > 0 ? t : null;
+                _dbSet.Add(t);
+                return _context.SaveChanges() > 0 ? t : null;
             }
             //catch (DbEntityValidationException e)
             //{
@@ -125,8 +137,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                Table.Add(t);
-                return await Context.SaveChangesAsync() > 0 ? t : null;
+                _dbSet.Add(t);
+                return await _context.SaveChangesAsync() > 0 ? t : null;
             }
             catch (Exception ex)
             {
@@ -139,8 +151,8 @@ namespace CourseManagement.BLL.AppLogic
             try
             {
                 
-                Context.Entry<T>(t).State = EntityState.Modified;
-                var bb = Context.SaveChanges();
+                _context.Entry<T>(t).State = EntityState.Modified;
+                var bb = _context.SaveChanges();
                 return bb > 0;
             }
             catch (Exception ex)
@@ -153,8 +165,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                Context.Entry<T>(t).State = EntityState.Modified;
-                return await Context.SaveChangesAsync() > 0;
+                _context.Entry<T>(t).State = EntityState.Modified;
+                return await _context.SaveChangesAsync() > 0;
             }
             catch (Exception)
             {
@@ -167,8 +179,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                Table.Remove(t);
-                return Context.SaveChanges() > 0;
+                _dbSet.Remove(t);
+                return _context.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -180,8 +192,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                Table.Remove(t);
-                return await Context.SaveChangesAsync() > 0 ? true : false;
+                _dbSet.Remove(t);
+                return await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception)
             {
@@ -194,7 +206,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return Table.Count();
+                return _dbSet.Count();
             }
             catch (Exception)
             {
@@ -207,7 +219,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return Table.Where(@where);
+                return _dbSet.Where(@where);
             }
             catch (Exception ex)
             {
@@ -219,8 +231,32 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                var items = await Table.Where(@where).ToListAsync();
+                var items = await _dbSet.Where(@where).ToListAsync();
                 return items.AsQueryable();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public virtual IQueryable<T> Get(Expression<Func<T, bool>> filter = null,
+                                               Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                               string includeProperties = "")
+        {
+            try
+            {
+                IQueryable<T> query = _dbSet;
+                if (filter != null)
+                    query = query.Where(filter).AsNoTracking();
+
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                    query = query.Include(includeProperty);
+
+                if (orderBy != null)
+                    return orderBy(query).AsNoTracking();
+                else
+                    return query.AsNoTracking();
             }
             catch (Exception ex)
             {
@@ -230,12 +266,12 @@ namespace CourseManagement.BLL.AppLogic
 
         public virtual T Single(Expression<Func<T, bool>> where)
         {
-            return Table.Single(@where) ?? Table?.SingleOrDefault(@where); //??          
+            return _dbSet.Single(@where) ?? _dbSet?.SingleOrDefault(@where); //??          
         }
 
         public virtual T First(Expression<Func<T, bool>> where)
         {
-            return Table.Single(where) ?? Table?.SingleOrDefault(@where); 
+            return _dbSet.Single(where) ?? _dbSet?.SingleOrDefault(@where); 
         }
 
         //public virtual bool SaveIncluded(T t, params string[] includedProperties)
@@ -245,7 +281,7 @@ namespace CourseManagement.BLL.AppLogic
         //        if (includedProperties.Any())
         //        {
         //            Table.Attach(t);
-        //            Context.Configuration.ValidateOnSaveEnabled = false;
+        //            Context.ChangeTracker.AutoDetectChangesEnabled = true;
         //            foreach (var name in includedProperties)
         //            {
         //                Context.Entry(t).Property(name).IsModified = true;
@@ -306,7 +342,7 @@ namespace CourseManagement.BLL.AppLogic
 
         public void Dispose()
         {
-            Context?.Dispose();
+            _context?.Dispose();
             GC.SuppressFinalize(this);
         }
         #endregion

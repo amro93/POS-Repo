@@ -1,4 +1,5 @@
 ﻿using POS.BLL.DataLogic;
+using POS.DAL.DBContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,16 @@ namespace POS_APP.WPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var testDBLogic = new TestDBLogic();
-            var x = testDBLogic.TestDb();
+            DataContext ctx = new DataContext(true); 
+            var pricingLogic = new PricingLogic(ctx);
+            var productLogic = new ProductLogic(ctx);
+
+            pricingLogic.TestDb();
+            pricingLogic.GetPricings();
+
+            productLogic.TestDb();
+            productLogic.GetProducts();
+            
 
         }
     }

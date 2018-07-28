@@ -31,8 +31,8 @@ namespace POS_APP.UWP.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var testDBLogic = new TestDBLogic();
-            var x = testDBLogic.TestDb();
+            //var testDBLogic = new TestDBLogic();
+            //var x = testDBLogic.TestDb();
 
         }
     }
