@@ -14,7 +14,7 @@ namespace POS.DAL.Models
         public long Phone_3 { get; set; }
         public long Phone_4 { get; set; }
         public string Notes { get; set; }
-        //public Image Logo { get; set; }
+        public string LogoUrl { get; set; }
         public virtual Location Location { get; set; }
 
     }

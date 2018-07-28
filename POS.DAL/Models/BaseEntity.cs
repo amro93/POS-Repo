@@ -8,7 +8,7 @@ namespace POS.DAL.Models
     public abstract class BaseEntity
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModifyDate { get; set; }
 

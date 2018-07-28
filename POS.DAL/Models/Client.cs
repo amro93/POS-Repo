@@ -6,7 +6,7 @@ namespace POS.DAL.Models
 {
     public class Client : BaseEntity
     {
-        //public virtual Person Person {get; set;}
+        public virtual Person Person {get; set;}
         public virtual List<Order> Orders { get; set; }
     }
 }

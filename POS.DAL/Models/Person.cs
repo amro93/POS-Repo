@@ -20,8 +20,8 @@ namespace POS.DAL.Models
         public string Notes { get; set; }
         public string Mobile { get; set; }
         public string AlternativePhone { get; set; }
-        public Location Location { get; set; }
-        public virtual User User { get; set; }
-        //public virtual Client Client { get; set; }        
+        public virtual Location Location { get; set; }
+        //public virtual User User { get; set; }
+        //public virtual Client Client { get; set; }
     }
 }

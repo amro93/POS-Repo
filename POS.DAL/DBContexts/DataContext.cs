@@ -16,10 +16,21 @@ namespace POS.DAL.DBContexts
         #endregion
 
         #region DBSet
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Pricing> Pricings { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Pricing> Pricings { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<OrderProductQuantity> ProductQuantities { get; set; }
+        public DbSet<ProductRetailer> ProductRetailers { get; set; }
+        public DbSet<Retailer> Retailers { get; set; }
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<StoreProductQuantity> StoreProductQuantities { get; set; }
+        public DbSet<User> Users { get; set; }
+
         #endregion
 
         #region Constructors
@@ -57,7 +68,31 @@ namespace POS.DAL.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Person>().HasOne(a => a.Client).WithOne(b => b.Person).OnDelete(DeleteBehavior.ClientSetNull);
+
+            #region OrderProductQuantity
+            modelBuilder.Entity<OrderProductQuantity>().HasOne<Order>(a => a.Order)
+                    .WithMany(b => b.OrderProductQuantities)
+                    .HasForeignKey(a => a.OrderId);
+
+            modelBuilder.Entity<OrderProductQuantity>().HasOne<Product>(a => a.Product)
+                .WithMany(b => b.OrderProductQuantities)
+                .HasForeignKey(a => a.ProductId);
+
+            modelBuilder.Entity<OrderProductQuantity>().HasKey("ProductId", "OrderId");
+            #endregion
+
+            #region StoreProductQuantity
+
+            modelBuilder.Entity<StoreProductQuantity>().HasOne<Store>(a => a.Store)
+                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.StoreId);
+
+            modelBuilder.Entity<StoreProductQuantity>().HasOne<Product>(a => a.Product)
+                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.ProductId);
+
+            modelBuilder.Entity<StoreProductQuantity>().HasKey("ProductId", "StoreId"); 
+
+            #endregion
+
             base.OnModelCreating(modelBuilder);
         } 
         #endregion

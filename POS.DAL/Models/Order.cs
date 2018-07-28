@@ -12,6 +12,6 @@ namespace POS.DAL.Models
         public string Address { get; set; }
         public virtual User SystemUser { get; set; }
         public virtual Client Client { get; set; }
-        public virtual List<ProductQuantity> GetProductQuantities { get; set; }
+        public virtual List<OrderProductQuantity> OrderProductQuantities{ get; set; }
     }
 }

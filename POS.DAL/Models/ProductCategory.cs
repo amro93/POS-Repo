@@ -8,8 +8,8 @@ namespace POS.DAL.Models
 {
     public class ProductCategory : BaseEntity
     {
+        public string Name { get; set; }
         //public Image Logo { get; set; }
         public virtual List<Product> Products { get; set; }
-        public virtual List<Store> Stores { get; set; }
     }
 }

@@ -11,6 +11,5 @@ namespace POS.DAL.Models
         public float? SellingPrice { get; set; }
         public float? BuyingPrice { get; set; }
         public PricingUnit? Unit { get; set; }
-        public virtual Product Products { get; set; }
     }
 }

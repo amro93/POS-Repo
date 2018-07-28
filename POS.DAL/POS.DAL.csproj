@@ -9,6 +9,11 @@
     <Compile Remove="Migrations\20180727141700_TestDatabase.cs" />
     <Compile Remove="Migrations\20180727223054_TestDB02.cs" />
     <Compile Remove="Migrations\20180727223359_TestDB.cs" />
+    <Compile Remove="Migrations\20180727232800_TestDB.cs" />
+    <Compile Remove="Migrations\20180728214311_Model.cs" />
+    <Compile Remove="Migrations\20180728214836_Model.cs" />
+    <Compile Remove="Migrations\20180728215208_Model.cs" />
+    <Compile Remove="Migrations\20180728222842_ModelInit.cs" />
     <Compile Remove="Models\TestDB.cs" />
   </ItemGroup>
 
@@ -24,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
