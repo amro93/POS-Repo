@@ -29,9 +29,8 @@ namespace POS_APP.WPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //var ctx = new DataContext();
-            //var x = new PricingLogic(ctx);
-            //var y = new ProductLogic(ctx);
+            //var x = new PricingLogic();
+            //var y = new ProductLogic();
             //x.TestDb();
             //x.GetPricings();
 

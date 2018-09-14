@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.BLL.DataLogic
+namespace POS.Services
 {
-    public class InitializeDataLogic
+    public class InitializeDataService
     {
         public static void MigrateDBAsync()
         {

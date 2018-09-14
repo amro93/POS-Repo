@@ -7,34 +7,21 @@ using POS.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using POS.DAL.DBContexts;
 
-namespace CourseManagement.BLL.AppLogic
+namespace POS.BLL.Repositories
 {
     public class Repository<T> : IDisposable, IRepository<T> where T : class
     {
         #region Properties
         internal DbSet<T> _dbSet { get; set; }
-        internal DataContext _context { get; set; }
+        internal protected DataContext _context { get; set; }
         #endregion
 
         #region Constructors
-        //public Repository()
-        //{
-        //    Context = new DataContext();
-        //    _dbSet = Context.Set<T>();
-        //}
-        //public Repository(bool _useLazyLoading = false)
-        //{
-        //    _context = new DataContext(_useLazyLoading);
-        //    _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
-        //    _context.ChangeTracker.AutoDetectChangesEnabled = true;
-        //    _context.ChangeTracker.LazyLoadingEnabled = true;
-        //    _dbSet = _context.Set<T>();
-        //}
-        public Repository(DataContext context, bool _useLazyLoading = false) 
+        public Repository(DataContext context, bool _useLazyLoading)
         {
             _context = context;
             context.ChangeTracker.AutoDetectChangesEnabled = true;
-            context.ChangeTracker.LazyLoadingEnabled = true;
+            context.ChangeTracker.LazyLoadingEnabled = _useLazyLoading;
             _dbSet = _context.Set<T>();
         }
         #endregion
@@ -46,6 +33,7 @@ namespace CourseManagement.BLL.AppLogic
             try
             {
                 return _dbSet;
+                //return _dbSet.AsNoTracking();
             }
             catch (Exception ex)
             {
@@ -58,6 +46,7 @@ namespace CourseManagement.BLL.AppLogic
             try
             {
                 var items = await _dbSet.ToListAsync();
+                //var items = await _dbSet.AsNoTracking().ToListAsync();
                 return items.AsQueryable();
             }
             catch (Exception ex)
@@ -81,8 +70,8 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
-                return (from id in idList 
-                       select _dbSet.Find(id)).ToList<T>();
+                return (from id in idList
+                        select _dbSet.Find(id)).ToList<T>();
             }
             catch (Exception ex)
             {
@@ -109,6 +98,12 @@ namespace CourseManagement.BLL.AppLogic
                 _dbSet.Add(t);
                 return _context.SaveChanges() > 0 ? t : null;
             }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            #region Old
             //catch (DbEntityValidationException e)
             //{
             //    string err = "";
@@ -124,17 +119,16 @@ namespace CourseManagement.BLL.AppLogic
             //    }
             //    throw e;
             //    //return null;
-            //}
-            catch (Exception ex) 
-            {
-               throw ex;
-            }
+            //} 
+            #endregion
         }
 
         public virtual async Task<T> AddAsync(T t)
         {
             try
             {
+                //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+                //_context.ChangeTracker.AutoDetectChangesEnabled = true;
                 _dbSet.Add(t);
                 return await _context.SaveChangesAsync() > 0 ? t : null;
             }
@@ -243,6 +237,7 @@ namespace CourseManagement.BLL.AppLogic
         {
             try
             {
+                _context.ChangeTracker.LazyLoadingEnabled = false;
                 IQueryable<T> query = _dbSet;
                 if (filter != null)
                     query = query.Where(filter).AsNoTracking();
@@ -268,7 +263,7 @@ namespace CourseManagement.BLL.AppLogic
 
         public virtual T First(Expression<Func<T, bool>> where)
         {
-            return _dbSet.Single(where) ?? _dbSet?.SingleOrDefault(@where); 
+            return _dbSet.Single(where) ?? _dbSet?.SingleOrDefault(@where);
         }
 
         //public virtual bool SaveIncluded(T t, params string[] includedProperties)

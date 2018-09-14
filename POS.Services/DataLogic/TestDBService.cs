@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.BLL.DataLogic
+namespace POS.Services
 {
-    public class PricingLogic : GenericService<Pricing>
+    public class PricingService : GenericService<Pricing>
     {
-        public PricingLogic(IRepository<Pricing> repository, DataContext dataContext) : base(repository, dataContext)
+        public PricingService(IRepository<Pricing> repository, DataContext dataContext) : base(repository, dataContext)
         {
         }
 
@@ -33,9 +33,9 @@ namespace POS.BLL.DataLogic
         }
     }
 
-    public class ProductLogic : GenericService<Product>
+    public class ProductService : GenericService<Product>
     {
-        public ProductLogic(IRepository<Product> repository, DataContext dataContext) : base(repository, dataContext)
+        public ProductService(IRepository<Product> repository, DataContext dataContext) : base(repository, dataContext)
         {
         }
 

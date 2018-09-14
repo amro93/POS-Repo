@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="AppLogic\" />
     <Folder Include="Repositories\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

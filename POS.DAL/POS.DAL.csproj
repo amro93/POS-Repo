@@ -15,6 +15,7 @@
     <Compile Remove="Migrations\20180728215208_Model.cs" />
     <Compile Remove="Migrations\20180728222842_ModelInit.cs" />
     <Compile Remove="Migrations\20180728234256_ModelInit.cs" />
+    <Compile Remove="Migrations\20180728234840_ModelInit.cs" />
     <Compile Remove="Models\TestDB.cs" />
   </ItemGroup>
 

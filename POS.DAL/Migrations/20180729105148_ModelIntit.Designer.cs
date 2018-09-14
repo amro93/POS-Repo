@@ -9,8 +9,8 @@ using POS.DAL.DBContexts;
 namespace POS.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180728234840_ModelInit")]
-    partial class ModelInit
+    [Migration("20180729105148_ModelIntit")]
+    partial class ModelIntit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
