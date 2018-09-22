@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using POS.BLL.Repositories;
 using POS.DAL.DBContexts;
+using POS.DAL.Models;
 using POS.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,21 @@ namespace POS.Services
 {
     public abstract class GenericService<T> where T : class
     {
+        private IRepository<User> repository;
+        private DataContext dataContext;
+
         protected IRepository<T> Repository {get;set;}
         internal protected DataContext _dataContext { get; set; }
-        public GenericService(IRepository<T> repository , DataContext dataContext)
+        public GenericService(bool useLazyLoading = true)
         {
-            Repository = repository;
-            _dataContext = dataContext;
+            _dataContext = new DataContext();
+            Repository = new Repository<T>(_dataContext, _useLazyLoading: useLazyLoading);
+        }
+
+        protected GenericService(IRepository<User> repository, DataContext dataContext)
+        {
+            this.repository = repository;
+            this.dataContext = dataContext;
         }
     }
 }

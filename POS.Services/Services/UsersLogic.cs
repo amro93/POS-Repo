@@ -9,7 +9,7 @@ namespace POS.Services
 {
     public class UsersSerivce : GenericService<User>
     {
-        public UsersSerivce(IRepository<User> repository, DataContext dataContext) : base(repository, dataContext)
+        public UsersSerivce(bool useLazyLoading = true) : base(useLazyLoading)
         {
 
         }
