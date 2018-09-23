@@ -17,7 +17,16 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.EntityFrameworkCore;
 using POS_APP.UWP.Views;
 using System.Threading.Tasks;
-using POS.BLL.DataLogic;
+using Microsoft.Extensions.DependencyInjection;
+using POS.DAL.Interfaces;
+using POS.DAL.Models;
+using POS.ViewModels.Login;
+using POS.Validation.ModelConverters;
+using System.ComponentModel;
+using POS.DAL.DBContexts;
+using POS.Services.Containers;
+using Autofac;
+using POS_APP.UWP.Views.Login;
 
 namespace POS_APP.UWP
 {
@@ -26,6 +35,7 @@ namespace POS_APP.UWP
     /// </summary>
     sealed partial class App : Application
     {
+        
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -43,9 +53,12 @@ namespace POS_APP.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //Migrate Database
-            InitializeDataLogic.MigrateDBAsync();
-
+            //Build Dependancy Injection Table
+            Factory.CreateBuilder();
+            //Auto Migrate Database
+            var dbInit = Factory.Container.Resolve<IDbInitializer>();
+            dbInit.Migrate();
+            //RegisterServices();
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -73,7 +86,7 @@ namespace POS_APP.UWP
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(LoginPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
@@ -103,5 +116,15 @@ namespace POS_APP.UWP
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        //private void RegisterServices()
+        //{
+        //    var services = new ServiceCollection();
+        //    services.AddSingleton<IModelConverter<User, LoginVM>, LoginVmConverter>();
+        //    services.AddTransient<LoginVM>();
+        //    Container = services.BuildServiceProvider();
+        //}
+        //public IServiceProvider Container { get; private set; }
+        IDbInitializer dbInitializer { get; set; }
     }
 }

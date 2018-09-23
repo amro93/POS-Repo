@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace POS.BLL.DataLogic
 {
-    public class InitializeDataLogic
+    public class InitializeDataLogic 
     {
         public static void MigrateDBAsync()
         {

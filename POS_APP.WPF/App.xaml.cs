@@ -1,5 +1,4 @@
-﻿using POS.BLL.DataLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -22,7 +21,7 @@ namespace POS_APP.WPF
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             //Migrate Database
-            InitializeDataLogic.MigrateDBAsync();
+            //InitializeDataLogic.MigrateDBAsync();
         }
     }
 }

@@ -5,8 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\POS.BLL\POS.BLL.csproj" />
+    <Compile Remove="Services\ClientsService.cs" />
+    <Compile Remove="Services\CompaniesService.cs" />
+    <Compile Remove="Services\LocationsService.cs" />
+    <Compile Remove="Services\OrderProductQuantitiesService.cs" />
+    <Compile Remove="Services\OrdersService.cs" />
+    <Compile Remove="Services\PeopleService.cs" />
+    <Compile Remove="Services\PricingsService.cs" />
+    <Compile Remove="Services\ProductCategoriesService.cs" />
+    <Compile Remove="Services\ProductRetailersSerivce.cs" />
+    <Compile Remove="Services\ProductsSerivce.cs" />
+    <Compile Remove="Services\StoreProductQuantitiesService.cs" />
+    <Compile Remove="Services\StoresService.cs" />
+    <Compile Remove="Services\TestDBService.cs" />
+    <Compile Remove="Services\UsersLogic.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\POS.DAL\POS.DAL.csproj" />
+    <ProjectReference Include="..\POS.Validation\POS.Validation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
-﻿using POS.BLL.DataLogic;
-using POS.DAL.DBContexts;
+﻿using POS.DAL.DBContexts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,6 +27,7 @@ namespace POS_APP.UWP.Views
         public FirstPage()
         {
             this.InitializeComponent();
+
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.DAL.Repositories
+namespace POS.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -24,7 +24,8 @@ namespace POS.DAL.Repositories
         Task<IQueryable<T>> FindAsync(Expression<Func<T, bool>> where);
         T Single(Expression<Func<T, bool>> where);
         T First(Expression<Func<T, bool>> where);
+        IQueryable<T> Table { get;  }
         //bool SaveIncluded(T t, params string[] includedProperties);
         //bool SaveExcluded(T t, params string[] excludedProperties);
-    }
+        }
 }

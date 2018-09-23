@@ -1,16 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using POS.DAL.DBContexts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace POS.Services
+namespace POS.DAL.DBContexts
 {
-    public class InitializeDataService
+    public class DBInitializer : IDbInitializer
     {
-        public static void MigrateDBAsync()
+
+        public void Migrate()
         {
             using (var db = new DataContext())
             {

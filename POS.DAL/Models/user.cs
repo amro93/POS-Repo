@@ -15,6 +15,6 @@ namespace POS.DAL.Models
         public string PhotoUrl { get; set; }
         public virtual Person Person { get; set; }
         public virtual List<Order> Orders { get; set; }
-        
+        public virtual List<Login> Logins { get; set; }
     }
 }

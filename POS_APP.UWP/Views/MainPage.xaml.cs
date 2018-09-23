@@ -1,4 +1,9 @@
-﻿using POS.BLL.DataLogic;
+﻿using Autofac;
+using POS.DAL.Interfaces;
+using POS.DAL.Models;
+using POS.Services;
+using POS.Services.Containers;
+using POS.ViewModels.Login;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,14 +29,17 @@ namespace POS_APP.UWP.Views
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public LoginVM ViewModel { get; }
         public MainPage()
         {
             this.InitializeComponent();
+            //ViewModel = (Application.Current as App).Container.GetService(typeof(LoginVM)) as LoginVM;
+            //modelConverter = (IModelConverter<User, LoginVM>)(Application.Current as App).Container.GetService(typeof(IModelConverter<User, LoginVM>));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            //clientsService.GetAllClients();
         }
     }
 }
