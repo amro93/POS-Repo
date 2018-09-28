@@ -1,5 +1,4 @@
-﻿using Autofac;
-using POS.Services.Containers;
+﻿using POS.Services.Containers;
 using POS.Services.Interfaces;
 using POS.ViewModels.Login;
 using System;
@@ -16,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -31,7 +31,7 @@ namespace POS_APP.UWP.Views.Login
         public LoginPage()
         {
             this.InitializeComponent();
-            userService = Factory.Container.Resolve<IUserService>();
+            userService = Factory.Container.GetService<IUserService>();
             loginVM = new LoginVM();
         }
 
@@ -55,7 +55,7 @@ namespace POS_APP.UWP.Views.Login
         {
             loginVM.UserName = UserNameTxtbx.Text;
             loginVM.Magic = PasswordTxtbx.Text;
-            if(userService.Logon(loginVM))
+            if (userService.Logon(loginVM))
             {
                 (Window.Current.Content as Frame).Navigate(typeof(MainPage));
             }

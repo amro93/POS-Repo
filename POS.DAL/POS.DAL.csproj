@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DBContexts\DbCtx.cs" />
+    <Compile Remove="DBContexts\IDbContext.cs" />
     <Compile Remove="Migrations\20180727124659_TestDB.cs" />
     <Compile Remove="Migrations\20180727141700_TestDatabase.cs" />
     <Compile Remove="Migrations\20180727223054_TestDB02.cs" />

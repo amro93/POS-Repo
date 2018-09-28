@@ -8,9 +8,9 @@ namespace POS.DAL.DBContexts
 {
     public class DBInitializer : IDbInitializer
     {
-        DbCtx context;
+        DataContext context;
 
-        public DBInitializer(DbCtx context)
+        public DBInitializer(DataContext context)
         {
             this.context = context;
         }

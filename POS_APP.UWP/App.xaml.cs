@@ -18,16 +18,11 @@ using Microsoft.EntityFrameworkCore;
 using POS_APP.UWP.Views;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using POS.DAL.Interfaces;
-using POS.DAL.Models;
-using POS.ViewModels.Login;
-using POS.Validation.ModelConverters;
-using System.ComponentModel;
-using POS.DAL.DBContexts;
-using POS.Services.Containers;
-using Autofac;
+
 using POS_APP.UWP.Views.Login;
 using POS.Services.Interfaces;
+using POS.Services.Containers;
+using POS.Services.Services;
 
 namespace POS_APP.UWP
 {
@@ -56,9 +51,10 @@ namespace POS_APP.UWP
         {
             //Build Dependancy Injection container Table
             Factory.CreateBuilder();
-
-            var appInitService = Factory.Container.Resolve<IInitAppService>();
-            appInitService.InitApp();
+            var initservice = Factory.Container.GetService<IInitAppService>();
+            initservice.InitApp();
+            //var appInitService = Factory.Container.Resolve<IInitAppService>();
+            //appInitService.InitApp();
 
             Frame rootFrame = Window.Current.Content as Frame;
 

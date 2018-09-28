@@ -1,9 +1,10 @@
-﻿using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Proxies;
+﻿using Microsoft.EntityFrameworkCore;
+using POS.DAL.MappingConfigurations;
 using POS.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace POS.DAL.DBContexts
@@ -16,33 +17,26 @@ namespace POS.DAL.DBContexts
         #endregion
 
         #region DBSet
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Location> Locations { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Person> People { get; set; }
-        public DbSet<Pricing> Pricings { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<OrderProductQuantity> OrderProductQuantity { get; set; }
-        public DbSet<ProductRetailer> ProductRetailers { get; set; }
-        public DbSet<Retailer> Retailers { get; set; }
-        public DbSet<Store> Stores { get; set; }
-        public DbSet<StoreProductQuantity> StoreProductQuantities { get; set; }
-        public DbSet<User> Users { get; set; }
-
-        #endregion
-
-        #region Constructors
-        public DataContext() : base()
+        //public DbSet<Client> Clients { get; set; }
+        //public DbSet<Company> Companies { get; set; }
+        //public DbSet<Location> Locations { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<Person> People { get; set; }
+        //public DbSet<Pricing> Pricings { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<ProductCategory> ProductCategories { get; set; }
+        //public DbSet<OrderProductQuantity> OrderProductQuantity { get; set; }
+        //public DbSet<ProductRetailer> ProductRetailers { get; set; }
+        //public DbSet<Retailer> Retailers { get; set; }
+        //public DbSet<Store> Stores { get; set; }
+        //public DbSet<StoreProductQuantity> StoreProductQuantities { get; set; }
+        //public DbSet<User> Users { get; set; }
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
         {
-
-        }
-        public DataContext(bool useLazyLoading = false) : base()
-        {
-            _useLazyLoading = useLazyLoading;
+            return base.Set<TEntity>();
         }
         #endregion
+
 
         #region Methods
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -50,7 +44,7 @@ namespace POS.DAL.DBContexts
             optionsBuilder.UseLazyLoadingProxies(_useLazyLoading)
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
                 .UseSqlite("Data Source=POS_data.db");
-
+            base.OnConfiguring(optionsBuilder);
             #region Connection old
 
             //var connection = new SqliteConnection("Data Source=POS_ProtectedData.db");
@@ -68,33 +62,33 @@ namespace POS.DAL.DBContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => type.IsClass && type.Namespace != null && type.Namespace.EndsWith("MappingConfigurations"))
+                .Where(type => type.GetInterfaces()
+                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)) && type.IsClass);
 
-            #region OrderProductQuantity
-            modelBuilder.Entity<OrderProductQuantity>().HasOne<Order>(a => a.Order)
-                    .WithMany(b => b.OrderProductQuantities)
-                    .HasForeignKey(a => a.OrderId);
-
-            modelBuilder.Entity<OrderProductQuantity>().HasOne<Product>(a => a.Product)
-                .WithMany(b => b.OrderProductQuantities)
-                .HasForeignKey(a => a.ProductId);
-
-            modelBuilder.Entity<OrderProductQuantity>().HasKey("ProductId", "OrderId");
-            #endregion
-
-            #region StoreProductQuantity
-
-            modelBuilder.Entity<StoreProductQuantity>().HasOne<Store>(a => a.Store)
-                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.StoreId);
-
-            modelBuilder.Entity<StoreProductQuantity>().HasOne<Product>(a => a.Product)
-                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.ProductId);
-
-            modelBuilder.Entity<StoreProductQuantity>().HasKey("ProductId", "StoreId"); 
-
-            #endregion
-
+            foreach (var type in typesToRegister)
+            {
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.ApplyConfiguration(configurationInstance);
+            }
+            //modelBuilder.ApplyConfiguration(new ClientMap());
+            //modelBuilder.ApplyConfiguration(new CompanyMap());
+            //modelBuilder.ApplyConfiguration(new LocationMap());
+            //modelBuilder.ApplyConfiguration(new LoginMap());
+            //modelBuilder.ApplyConfiguration(new OrderMap());
+            //modelBuilder.ApplyConfiguration(new OrderProductQuantityMap());
+            //modelBuilder.ApplyConfiguration(new PersonMap());
+            //modelBuilder.ApplyConfiguration(new PricingMap());
+            //modelBuilder.ApplyConfiguration(new ProductCategoryMap());
+            //modelBuilder.ApplyConfiguration(new ProductMap());
+            //modelBuilder.ApplyConfiguration(new ProductRetailerMap());
+            //modelBuilder.ApplyConfiguration(new RetailerMap());
+            //modelBuilder.ApplyConfiguration(new StoreMap());
+            //modelBuilder.ApplyConfiguration(new StoreProductQuantityMap());
+            //modelBuilder.ApplyConfiguration(new UserMap());
             base.OnModelCreating(modelBuilder);
-        } 
+        }
         #endregion
     }
 }

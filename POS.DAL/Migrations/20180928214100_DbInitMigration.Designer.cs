@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS.DAL.DBContexts;
 
-namespace POS.DAL.Migrations.DbCtxMigrations
+namespace POS.DAL.Migrations
 {
-    [DbContext(typeof(DbCtx))]
-    [Migration("20180928153338_InitialMigrations")]
-    partial class InitialMigrations
+    [DbContext(typeof(DataContext))]
+    [Migration("20180928214100_DbInitMigration")]
+    partial class DbInitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,7 +33,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Client");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Company", b =>
@@ -65,7 +65,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Company");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Location", b =>
@@ -83,7 +83,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Login", b =>
@@ -129,7 +129,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("SystemUserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.OrderProductQuantity", b =>
@@ -178,7 +178,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Person");
+                    b.ToTable("People");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Pricing", b =>
@@ -200,7 +200,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pricing");
+                    b.ToTable("Pricings");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Product", b =>
@@ -238,7 +238,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.ProductCategory", b =>
@@ -254,7 +254,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategory");
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.ProductRetailer", b =>
@@ -276,7 +276,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("RetailerId");
 
-                    b.ToTable("ProductRetailer");
+                    b.ToTable("ProductRetailers");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Retailer", b =>
@@ -294,7 +294,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Retailer");
+                    b.ToTable("Retailers");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Store", b =>
@@ -314,7 +314,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Store");
+                    b.ToTable("Stores");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.StoreProductQuantity", b =>
@@ -329,7 +329,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("StoreProductQuantity");
+                    b.ToTable("StoreProductQuantities");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.User", b =>
@@ -355,7 +355,7 @@ namespace POS.DAL.Migrations.DbCtxMigrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Client", b =>

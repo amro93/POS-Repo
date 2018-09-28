@@ -13,12 +13,12 @@ namespace POS.DAL.GenericClasses
     {
         #region Properties
         internal DbSet<T> _entities { get; set; }
-        internal protected DbCtx _context { get; set; }
+        internal protected DataContext _context { get; set; }
         public virtual IQueryable<T> Table { get => this.Entities; }
         #endregion
 
         #region Constructors
-        public Repository(DbCtx context)
+        public Repository(DataContext context)
         {
             _context = context;
             //context.ChangeTracker.AutoDetectChangesEnabled = true;
@@ -33,7 +33,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                return _entities;
+                return Entities;
                 //return _dbSet.AsNoTracking();
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                var items = await _entities.ToListAsync();
+                var items = await Entities.ToListAsync();
                 //var items = await _dbSet.AsNoTracking().ToListAsync();
                 return items.AsQueryable();
             }
@@ -60,7 +60,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                return _entities.Find(Id);
+                return Entities.Find(Id);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace POS.DAL.GenericClasses
             try
             {
                 return (from id in idList
-                        select _entities.Find(id)).ToList<T>();
+                        select Entities.Find(id)).ToList<T>();
             }
             catch (Exception ex)
             {
@@ -84,7 +84,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                return await _entities.FindAsync(Id);
+                return await Entities.FindAsync(Id);
             }
             catch (Exception ex)
             {
@@ -96,7 +96,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                _entities.Add(t);
+                Entities.Add(t);
                 return _context.SaveChanges() > 0 ? t : null;
             }
 
@@ -130,7 +130,7 @@ namespace POS.DAL.GenericClasses
             {
                 //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
                 //_context.ChangeTracker.AutoDetectChangesEnabled = true;
-                _entities.Add(t);
+                Entities.Add(t);
                 return await _context.SaveChangesAsync() > 0 ? t : null;
             }
             catch (Exception ex)
@@ -171,7 +171,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                _entities.Remove(t);
+                Entities.Remove(t);
                 return _context.SaveChanges() > 0;
             }
             catch (Exception)
@@ -184,7 +184,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                _entities.Remove(t);
+                Entities.Remove(t);
                 return await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception)
@@ -198,7 +198,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                return _entities.Count();
+                return Entities.Count();
             }
             catch (Exception)
             {
@@ -211,7 +211,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                return _entities.Where(@where);
+                return Entities.Where(@where);
             }
             catch (Exception ex)
             {
@@ -223,7 +223,7 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                var items = await _entities.Where(@where).ToListAsync();
+                var items = await Entities.Where(@where).ToListAsync();
                 return items.AsQueryable();
             }
             catch (Exception ex)
@@ -231,42 +231,22 @@ namespace POS.DAL.GenericClasses
                 throw ex;
             }
         }
-
-        public virtual IQueryable<T> Get(Expression<Func<T, bool>> filter = null,
-                                               Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                               string includeProperties = "")
-        {
-            try
-            {
-                _context.ChangeTracker.LazyLoadingEnabled = false;
-                IQueryable<T> query = _entities;
-                if (filter != null)
-                    query = query.Where(filter).AsNoTracking();
-
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                    query = query.Include(includeProperty);
-
-                if (orderBy != null)
-                    return orderBy(query).AsNoTracking();
-                else
-                    return query.AsNoTracking();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+        
         public virtual T Single(Expression<Func<T, bool>> where)
         {
-            return _entities.Single(@where) ?? _entities?.SingleOrDefault(@where); //??          
+            return Entities.Single(@where) ?? Entities?.SingleOrDefault(@where); //??          
         }
 
         public virtual T First(Expression<Func<T, bool>> where)
         {
-            return _entities.Single(where) ?? _entities?.SingleOrDefault(@where);
+            return Entities.Single(where) ?? Entities?.SingleOrDefault(@where);
         }
-
+        public void Dispose()
+        {
+            _context?.Dispose();
+            GC.SuppressFinalize(this);
+        }
+        #endregion
         private DbSet<T> Entities
         {
             get
@@ -278,6 +258,32 @@ namespace POS.DAL.GenericClasses
                 return _entities;
             }
         }
+
+
+        //public virtual IQueryable<T> Get(Expression<Func<T, bool>> filter = null,
+        //                                       Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        //                                       string includeProperties = "")
+        //{
+        //    try
+        //    {
+        //        _context.ChangeTracker.LazyLoadingEnabled = false;
+        //        IQueryable<T> query = _entities;
+        //        if (filter != null)
+        //            query = query.Where(filter).AsNoTracking();
+
+        //        foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        //            query = query.Include(includeProperty);
+
+        //        if (orderBy != null)
+        //            return orderBy(query).AsNoTracking();
+        //        else
+        //            return query.AsNoTracking();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
         //public virtual bool SaveIncluded(T t, params string[] includedProperties)
         //{
@@ -345,12 +351,7 @@ namespace POS.DAL.GenericClasses
         //    }
         //}
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-            GC.SuppressFinalize(this);
-        }
-        #endregion
+
 
     }
 }

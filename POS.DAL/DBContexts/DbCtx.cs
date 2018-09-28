@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using POS.DAL.MappingConfigurations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+using POS.DAL.Models;
 
 namespace POS.DAL.DBContexts
 {
@@ -19,20 +13,20 @@ namespace POS.DAL.DBContexts
 
         
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => type.IsClass && type.Namespace != null && type.Namespace.EndsWith("MappingConfigurations"))
-                .Where(type => type.GetInterfaces()
-                    .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)) && type.IsClass);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
+        //        .Where(type => type.IsClass && type.Namespace != null && type.Namespace.EndsWith("MappingConfigurations"))
+        //        .Where(type => type.GetInterfaces()
+        //            .Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)) && type.IsClass);
 
-            foreach (var type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.ApplyConfiguration(configurationInstance);
-            }
-            base.OnModelCreating(modelBuilder);
-        }
+        //    foreach (var type in typesToRegister)
+        //    {
+        //        dynamic configurationInstance = Activator.CreateInstance(type);
+        //        modelBuilder.ApplyConfiguration(configurationInstance);
+        //    }
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -57,10 +51,73 @@ namespace POS.DAL.DBContexts
             #endregion
         }
 
-        public new DbSet<TEntity> Set<TEntity>() where TEntity : class
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfiguration(new ClientMap());
+        //    modelBuilder.ApplyConfiguration(new CompanyMap());
+        //    modelBuilder.ApplyConfiguration(new LocationMap());
+        //    modelBuilder.ApplyConfiguration(new LoginMap());
+        //    modelBuilder.ApplyConfiguration(new OrderMap());
+        //    modelBuilder.ApplyConfiguration(new OrderProductQuantityMap());
+        //    modelBuilder.ApplyConfiguration(new PersonMap());
+        //    modelBuilder.ApplyConfiguration(new PricingMap());
+        //    modelBuilder.ApplyConfiguration(new ProductCategoryMap());
+        //    modelBuilder.ApplyConfiguration(new ProductMap());
+        //    modelBuilder.ApplyConfiguration(new ProductRetailerMap());
+        //    modelBuilder.ApplyConfiguration(new RetailerMap());
+        //    modelBuilder.ApplyConfiguration(new StoreMap());
+        //    modelBuilder.ApplyConfiguration(new StoreProductQuantityMap());
+        //    modelBuilder.ApplyConfiguration(new UserMap());
+        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            return base.Set<TEntity>();
+
+            #region OrderProductQuantity
+            modelBuilder.Entity<OrderProductQuantity>().HasOne<Order>(a => a.Order)
+                    .WithMany(b => b.OrderProductQuantities)
+                    .HasForeignKey(a => a.OrderId);
+
+            modelBuilder.Entity<OrderProductQuantity>().HasOne<Product>(a => a.Product)
+                .WithMany(b => b.OrderProductQuantities)
+                .HasForeignKey(a => a.ProductId);
+
+            modelBuilder.Entity<OrderProductQuantity>().HasKey("ProductId", "OrderId");
+            #endregion
+
+            #region StoreProductQuantity
+
+            modelBuilder.Entity<StoreProductQuantity>().HasOne<Store>(a => a.Store)
+                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.StoreId);
+
+            modelBuilder.Entity<StoreProductQuantity>().HasOne<Product>(a => a.Product)
+                .WithMany(b => b.StoreProductQuantities).HasForeignKey(a => a.ProductId);
+
+            modelBuilder.Entity<StoreProductQuantity>().HasKey("ProductId", "StoreId");
+
+            #endregion
+
+            base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Pricing> Pricings { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<OrderProductQuantity> OrderProductQuantity { get; set; }
+        public DbSet<ProductRetailer> ProductRetailers { get; set; }
+        public DbSet<Retailer> Retailers { get; set; }
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<StoreProductQuantity> StoreProductQuantities { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        //public new DbSet<TEntity> Set<TEntity>() where TEntity : class
+        //{
+        //    return base.Set<TEntity>();
+        //}
 
         #region Reflection OnModelCreating
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -97,24 +154,7 @@ namespace POS.DAL.DBContexts
         /// </summary>
         /// <param name="modelBuilder"></param>
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.ApplyConfiguration(new ClientMap());
-        //    modelBuilder.ApplyConfiguration(new CompanyMap());
-        //    modelBuilder.ApplyConfiguration(new LocationMap());
-        //    modelBuilder.ApplyConfiguration(new LoginMap());
-        //    modelBuilder.ApplyConfiguration(new OrderMap());
-        //    modelBuilder.ApplyConfiguration(new OrderProductQuantityMap());
-        //    modelBuilder.ApplyConfiguration(new PersonMap());
-        //    modelBuilder.ApplyConfiguration(new PricingMap());
-        //    modelBuilder.ApplyConfiguration(new ProductCategoryMap());
-        //    modelBuilder.ApplyConfiguration(new ProductMap());
-        //    modelBuilder.ApplyConfiguration(new ProductRetailerMap());
-        //    modelBuilder.ApplyConfiguration(new RetailerMap());
-        //    modelBuilder.ApplyConfiguration(new StoreMap());
-        //    modelBuilder.ApplyConfiguration(new StoreProductQuantityMap());
-        //    modelBuilder.ApplyConfiguration(new UserMap());
-        //}
+
         #endregion
 
     }

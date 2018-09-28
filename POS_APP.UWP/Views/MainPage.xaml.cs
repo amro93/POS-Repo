@@ -1,8 +1,6 @@
-﻿using Autofac;
-using POS.DAL.Interfaces;
+﻿using POS.DAL.Interfaces;
 using POS.DAL.Models;
 using POS.Services;
-using POS.Services.Containers;
 using POS.ViewModels.Login;
 using System;
 using System.Collections.Generic;

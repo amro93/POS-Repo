@@ -16,7 +16,7 @@ namespace POS.ViewModels.GenericVMRepositories
         IModelConverter<TModel,VM> modelConverter { get; set; }
         
         public VMRepository(IModelConverter<TModel, VM> modelConverter,
-            DbCtx context) : base(context)
+            DataContext context) : base(context)
         {
             this.modelConverter = modelConverter;
         }

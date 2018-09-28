@@ -1,5 +1,4 @@
-﻿using Autofac;
-using POS.DAL.DBContexts;
+﻿using POS.DAL.DBContexts;
 using POS.DAL.Interfaces;
 using POS.DAL.Models;
 using POS.Services.Containers;

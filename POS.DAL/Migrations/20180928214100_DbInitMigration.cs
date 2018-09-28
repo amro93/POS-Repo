@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace POS.DAL.Migrations.DbCtxMigrations
+namespace POS.DAL.Migrations
 {
-    public partial class InitialMigrations : Migration
+    public partial class DbInitMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -20,11 +20,11 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pricing",
+                name: "Pricings",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -38,11 +38,11 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pricing", x => x.Id);
+                    table.PrimaryKey("PK_Pricings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductCategory",
+                name: "ProductCategories",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -53,11 +53,11 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategory", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Company",
+                name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -75,17 +75,17 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Company", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Company_Location_LocationId",
+                        name: "FK_Companies_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Person",
+                name: "People",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -104,17 +104,17 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.Id);
+                    table.PrimaryKey("PK_People", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Person_Location_LocationId",
+                        name: "FK_People_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Store",
+                name: "Stores",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -126,17 +126,17 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Store", x => x.Id);
+                    table.PrimaryKey("PK_Stores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Store_Location_LocationId",
+                        name: "FK_Stores_Locations_LocationId",
                         column: x => x.LocationId,
-                        principalTable: "Location",
+                        principalTable: "Locations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Client",
+                name: "Clients",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -147,17 +147,17 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Client", x => x.Id);
+                    table.PrimaryKey("PK_Clients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Client_Person_PersonId",
+                        name: "FK_Clients_People_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Person",
+                        principalTable: "People",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Retailer",
+                name: "Retailers",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -168,17 +168,17 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Retailer", x => x.Id);
+                    table.PrimaryKey("PK_Retailers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Retailer_Person_PersonId",
+                        name: "FK_Retailers_People_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Person",
+                        principalTable: "People",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -193,11 +193,11 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Person_PersonId",
+                        name: "FK_Users_People_PersonId",
                         column: x => x.PersonId,
-                        principalTable: "Person",
+                        principalTable: "People",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -217,15 +217,15 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 {
                     table.PrimaryKey("PK_Login", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Login_User_UserId",
+                        name: "FK_Login_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -239,23 +239,23 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_Client_ClientId",
+                        name: "FK_Orders_Clients_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "Client",
+                        principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Order_User_SystemUserId",
+                        name: "FK_Orders_Users_SystemUserId",
                         column: x => x.SystemUserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -273,29 +273,29 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_User_EnteredById",
+                        name: "FK_Products_Users_EnteredById",
                         column: x => x.EnteredById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_User_ModifiedById",
+                        name: "FK_Products_Users_ModifiedById",
                         column: x => x.ModifiedById,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_Pricing_PricingId",
+                        name: "FK_Products_Pricings_PricingId",
                         column: x => x.PricingId,
-                        principalTable: "Pricing",
+                        principalTable: "Pricings",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_ProductCategory_ProductCategoryId",
+                        name: "FK_Products_ProductCategories_ProductCategoryId",
                         column: x => x.ProductCategoryId,
-                        principalTable: "ProductCategory",
+                        principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -312,21 +312,21 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 {
                     table.PrimaryKey("PK_OrderProductQuantity", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_OrderProductQuantity_Order_OrderId",
+                        name: "FK_OrderProductQuantity_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderProductQuantity_Product_ProductId",
+                        name: "FK_OrderProductQuantity_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductRetailer",
+                name: "ProductRetailers",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -338,23 +338,23 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductRetailer", x => x.Id);
+                    table.PrimaryKey("PK_ProductRetailers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductRetailer_Product_ProductId",
+                        name: "FK_ProductRetailers_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProductRetailer_Retailer_RetailerId",
+                        name: "FK_ProductRetailers_Retailers_RetailerId",
                         column: x => x.RetailerId,
-                        principalTable: "Retailer",
+                        principalTable: "Retailers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StoreProductQuantity",
+                name: "StoreProductQuantities",
                 columns: table => new
                 {
                     Quantity = table.Column<float>(nullable: false),
@@ -363,29 +363,29 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StoreProductQuantity", x => new { x.ProductId, x.StoreId });
+                    table.PrimaryKey("PK_StoreProductQuantities", x => new { x.ProductId, x.StoreId });
                     table.ForeignKey(
-                        name: "FK_StoreProductQuantity_Product_ProductId",
+                        name: "FK_StoreProductQuantities_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StoreProductQuantity_Store_StoreId",
+                        name: "FK_StoreProductQuantities_Stores_StoreId",
                         column: x => x.StoreId,
-                        principalTable: "Store",
+                        principalTable: "Stores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Client_PersonId",
-                table: "Client",
+                name: "IX_Clients_PersonId",
+                table: "Clients",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Company_LocationId",
-                table: "Company",
+                name: "IX_Companies_LocationId",
+                table: "Companies",
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
@@ -394,80 +394,80 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ClientId",
-                table: "Order",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_SystemUserId",
-                table: "Order",
-                column: "SystemUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderProductQuantity_OrderId",
                 table: "OrderProductQuantity",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_LocationId",
-                table: "Person",
+                name: "IX_Orders_ClientId",
+                table: "Orders",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_SystemUserId",
+                table: "Orders",
+                column: "SystemUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_People_LocationId",
+                table: "People",
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_EnteredById",
-                table: "Product",
-                column: "EnteredById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_ModifiedById",
-                table: "Product",
-                column: "ModifiedById");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_PricingId",
-                table: "Product",
-                column: "PricingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Product_ProductCategoryId",
-                table: "Product",
-                column: "ProductCategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductRetailer_ProductId",
-                table: "ProductRetailer",
+                name: "IX_ProductRetailers_ProductId",
+                table: "ProductRetailers",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductRetailer_RetailerId",
-                table: "ProductRetailer",
+                name: "IX_ProductRetailers_RetailerId",
+                table: "ProductRetailers",
                 column: "RetailerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Retailer_PersonId",
-                table: "Retailer",
+                name: "IX_Products_EnteredById",
+                table: "Products",
+                column: "EnteredById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ModifiedById",
+                table: "Products",
+                column: "ModifiedById");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_PricingId",
+                table: "Products",
+                column: "PricingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ProductCategoryId",
+                table: "Products",
+                column: "ProductCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Retailers_PersonId",
+                table: "Retailers",
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Store_LocationId",
-                table: "Store",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StoreProductQuantity_StoreId",
-                table: "StoreProductQuantity",
+                name: "IX_StoreProductQuantities_StoreId",
+                table: "StoreProductQuantities",
                 column: "StoreId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_PersonId",
-                table: "User",
+                name: "IX_Stores_LocationId",
+                table: "Stores",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PersonId",
+                table: "Users",
                 column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Company");
+                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Login");
@@ -476,40 +476,40 @@ namespace POS.DAL.Migrations.DbCtxMigrations
                 name: "OrderProductQuantity");
 
             migrationBuilder.DropTable(
-                name: "ProductRetailer");
+                name: "ProductRetailers");
 
             migrationBuilder.DropTable(
-                name: "StoreProductQuantity");
+                name: "StoreProductQuantities");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Retailer");
+                name: "Retailers");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Store");
+                name: "Stores");
 
             migrationBuilder.DropTable(
-                name: "Client");
+                name: "Clients");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Pricing");
+                name: "Pricings");
 
             migrationBuilder.DropTable(
-                name: "ProductCategory");
+                name: "ProductCategories");
 
             migrationBuilder.DropTable(
-                name: "Person");
+                name: "People");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Locations");
         }
     }
 }
