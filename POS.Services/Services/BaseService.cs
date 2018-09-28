@@ -15,14 +15,10 @@ namespace POS.Services
 {
     public abstract class GenericService<T> : IGenericService<T> where T : class 
     {
-        private DataContext dataContext;
 
-        protected IRepository<T> Repository {get;set;}
         
-        public GenericService(IRepository<T> Repository , DataContext dataContext)
+        public GenericService( )
         {
-            this.Repository = Repository;
-            this.dataContext = dataContext;
         }
     }
 }

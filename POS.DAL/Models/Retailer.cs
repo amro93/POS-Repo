@@ -6,7 +6,7 @@ namespace POS.DAL.Models
 {
     public class Retailer : BaseEntity
     {
-        public Person Person { get; set; }
-        public List<ProductRetailer> ProductRetailers { get; set; }
+        public virtual Person Person { get; set; }
+        public virtual List<ProductRetailer> ProductRetailers { get; set; }
     }
 }

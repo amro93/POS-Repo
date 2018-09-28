@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using POS.DAL.DBContexts;
 
-namespace POS.DAL.Migrations
+namespace POS.DAL.Migrations.DbCtxMigrations
 {
-    [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DbCtx))]
+    partial class DbCtxModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -31,7 +31,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Client");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Company", b =>
@@ -63,7 +63,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Location", b =>
@@ -81,7 +81,7 @@ namespace POS.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Login", b =>
@@ -127,7 +127,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("SystemUserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.OrderProductQuantity", b =>
@@ -176,7 +176,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("People");
+                    b.ToTable("Person");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Pricing", b =>
@@ -198,7 +198,7 @@ namespace POS.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pricings");
+                    b.ToTable("Pricing");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Product", b =>
@@ -236,7 +236,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.ProductCategory", b =>
@@ -252,7 +252,7 @@ namespace POS.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategory");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.ProductRetailer", b =>
@@ -274,7 +274,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("RetailerId");
 
-                    b.ToTable("ProductRetailers");
+                    b.ToTable("ProductRetailer");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Retailer", b =>
@@ -292,7 +292,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Retailers");
+                    b.ToTable("Retailer");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Store", b =>
@@ -312,7 +312,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Store");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.StoreProductQuantity", b =>
@@ -327,7 +327,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("StoreProductQuantities");
+                    b.ToTable("StoreProductQuantity");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.User", b =>
@@ -353,7 +353,7 @@ namespace POS.DAL.Migrations
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("POS.DAL.Models.Client", b =>

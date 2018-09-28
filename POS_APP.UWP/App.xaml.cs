@@ -27,6 +27,7 @@ using POS.DAL.DBContexts;
 using POS.Services.Containers;
 using Autofac;
 using POS_APP.UWP.Views.Login;
+using POS.Services.Interfaces;
 
 namespace POS_APP.UWP
 {
@@ -53,12 +54,12 @@ namespace POS_APP.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //Build Dependancy Injection Table
+            //Build Dependancy Injection container Table
             Factory.CreateBuilder();
-            //Auto Migrate Database
-            var dbInit = Factory.Container.Resolve<IDbInitializer>();
-            dbInit.Migrate();
-            //RegisterServices();
+
+            var appInitService = Factory.Container.Resolve<IInitAppService>();
+            appInitService.InitApp();
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -124,7 +125,5 @@ namespace POS_APP.UWP
         //    services.AddTransient<LoginVM>();
         //    Container = services.BuildServiceProvider();
         //}
-        //public IServiceProvider Container { get; private set; }
-        IDbInitializer dbInitializer { get; set; }
     }
 }

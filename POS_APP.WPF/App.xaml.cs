@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Autofac;
+using POS.Services.Containers;
+using POS.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -20,8 +23,9 @@ namespace POS_APP.WPF
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //Migrate Database
-            //InitializeDataLogic.MigrateDBAsync();
+            Factory.CreateBuilder();
+            var appInitService = Factory.Container.Resolve<IInitAppService>();
+            appInitService.InitApp();
         }
     }
 }

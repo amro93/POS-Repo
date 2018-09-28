@@ -12,8 +12,10 @@ namespace POS.Services.Services
 {
     class UserService : GenericService<User>, IUserService
     {
-        public UserService(IRepository<User> Repository, DataContext dataContext) : base(Repository, dataContext)
+        IRepository<User> Repository;
+        public UserService(IRepository<User> Repository) : base()
         {
+            this.Repository = Repository;
         }
         
         public IEnumerable<string> GetUserNames()
@@ -36,7 +38,7 @@ namespace POS.Services.Services
         {
             var user = Repository.Add(new User() {
                 UserName = "Amro",
-                Magic = "123465",
+                Magic = "123456",
                 CreationDate = DateTime.Now,
                 Role = Role.SuperAdmin
             });
