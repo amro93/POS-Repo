@@ -12,25 +12,11 @@ namespace POS.DAL.DBContexts
     public class DataContext : DbContext
     {
         #region pivate
-        private bool _useLazyLoading = false;
+        private bool _useLazyLoading = true;
 
         #endregion
 
         #region DBSet
-        //public DbSet<Client> Clients { get; set; }
-        //public DbSet<Company> Companies { get; set; }
-        //public DbSet<Location> Locations { get; set; }
-        //public DbSet<Order> Orders { get; set; }
-        //public DbSet<Person> People { get; set; }
-        //public DbSet<Pricing> Pricings { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
-        //public DbSet<OrderProductQuantity> OrderProductQuantity { get; set; }
-        //public DbSet<ProductRetailer> ProductRetailers { get; set; }
-        //public DbSet<Retailer> Retailers { get; set; }
-        //public DbSet<Store> Stores { get; set; }
-        //public DbSet<StoreProductQuantity> StoreProductQuantities { get; set; }
-        //public DbSet<User> Users { get; set; }
         public new DbSet<TEntity> Set<TEntity>() where TEntity : class
         {
             return base.Set<TEntity>();
@@ -72,21 +58,6 @@ namespace POS.DAL.DBContexts
                 dynamic configurationInstance = Activator.CreateInstance(type);
                 modelBuilder.ApplyConfiguration(configurationInstance);
             }
-            //modelBuilder.ApplyConfiguration(new ClientMap());
-            //modelBuilder.ApplyConfiguration(new CompanyMap());
-            //modelBuilder.ApplyConfiguration(new LocationMap());
-            //modelBuilder.ApplyConfiguration(new LoginMap());
-            //modelBuilder.ApplyConfiguration(new OrderMap());
-            //modelBuilder.ApplyConfiguration(new OrderProductQuantityMap());
-            //modelBuilder.ApplyConfiguration(new PersonMap());
-            //modelBuilder.ApplyConfiguration(new PricingMap());
-            //modelBuilder.ApplyConfiguration(new ProductCategoryMap());
-            //modelBuilder.ApplyConfiguration(new ProductMap());
-            //modelBuilder.ApplyConfiguration(new ProductRetailerMap());
-            //modelBuilder.ApplyConfiguration(new RetailerMap());
-            //modelBuilder.ApplyConfiguration(new StoreMap());
-            //modelBuilder.ApplyConfiguration(new StoreProductQuantityMap());
-            //modelBuilder.ApplyConfiguration(new UserMap());
             base.OnModelCreating(modelBuilder);
         }
         #endregion
