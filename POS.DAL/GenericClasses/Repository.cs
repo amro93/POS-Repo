@@ -12,18 +12,18 @@ namespace POS.DAL.GenericClasses
     public class Repository<T> : IDisposable, IRepository<T> where T : class
     {
         #region Properties
-        internal DbSet<T> _entities { get; set; }
-        internal protected DataContext _context { get; set; }
+        private DbSet<T> _entities { get; set; }
+        protected DataContext context { get; set; }
         public virtual IQueryable<T> Table { get => this.Entities; }
         #endregion
 
         #region Constructors
         public Repository(DataContext context)
         {
-            _context = context;
+            this.context = context;
             //context.ChangeTracker.AutoDetectChangesEnabled = true;
             //context.ChangeTracker.LazyLoadingEnabled = _useLazyLoading;
-            _entities = _context.Set<T>();
+            //_entities = _context.Set<T>();
         }
         #endregion
 
@@ -97,7 +97,7 @@ namespace POS.DAL.GenericClasses
             try
             {
                 Entities.Add(t);
-                return _context.SaveChanges() > 0 ? t : null;
+                return context.SaveChanges() > 0 ? t : null;
             }
 
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace POS.DAL.GenericClasses
                 //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
                 //_context.ChangeTracker.AutoDetectChangesEnabled = true;
                 Entities.Add(t);
-                return await _context.SaveChangesAsync() > 0 ? t : null;
+                return await context.SaveChangesAsync() > 0 ? t : null;
             }
             catch (Exception ex)
             {
@@ -143,8 +143,8 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                _context.Entry<T>(t).State = EntityState.Modified;
-                var bb = _context.SaveChanges();
+                context.Entry<T>(t).State = EntityState.Modified;
+                var bb = context.SaveChanges();
                 return bb > 0;
             }
             catch (Exception ex)
@@ -157,8 +157,8 @@ namespace POS.DAL.GenericClasses
         {
             try
             {
-                _context.Entry<T>(t).State = EntityState.Modified;
-                return await _context.SaveChangesAsync() > 0;
+                context.Entry<T>(t).State = EntityState.Modified;
+                return await context.SaveChangesAsync() > 0;
             }
             catch (Exception)
             {
@@ -172,7 +172,7 @@ namespace POS.DAL.GenericClasses
             try
             {
                 Entities.Remove(t);
-                return _context.SaveChanges() > 0;
+                return context.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -185,7 +185,7 @@ namespace POS.DAL.GenericClasses
             try
             {
                 Entities.Remove(t);
-                return await _context.SaveChangesAsync() > 0 ? true : false;
+                return await context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception)
             {
@@ -243,7 +243,7 @@ namespace POS.DAL.GenericClasses
         }
         public void Dispose()
         {
-            _context?.Dispose();
+            context?.Dispose();
             GC.SuppressFinalize(this);
         }
         #endregion
@@ -253,7 +253,7 @@ namespace POS.DAL.GenericClasses
             {
                 if (_entities == null)
                 {
-                    _entities = _context.Set<T>();
+                    _entities = context.Set<T>();
                 }
                 return _entities;
             }

@@ -12,6 +12,7 @@ namespace POS.DAL.MappingConfigurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.ToTable("Users");
         }
     }
 }

@@ -7,28 +7,27 @@
   <ItemGroup>
     <Compile Remove="DBContexts\DbCtx.cs" />
     <Compile Remove="DBContexts\IDbContext.cs" />
-    <Compile Remove="Migrations\20180727124659_TestDB.cs" />
-    <Compile Remove="Migrations\20180727141700_TestDatabase.cs" />
-    <Compile Remove="Migrations\20180727223054_TestDB02.cs" />
-    <Compile Remove="Migrations\20180727223359_TestDB.cs" />
-    <Compile Remove="Migrations\20180727232800_TestDB.cs" />
-    <Compile Remove="Migrations\20180728214311_Model.cs" />
-    <Compile Remove="Migrations\20180728214836_Model.cs" />
-    <Compile Remove="Migrations\20180728215208_Model.cs" />
-    <Compile Remove="Migrations\20180728222842_ModelInit.cs" />
-    <Compile Remove="Migrations\20180728234256_ModelInit.cs" />
-    <Compile Remove="Migrations\20180728234840_ModelInit.cs" />
+    <Compile Remove="MappingConfigurations\CompanyMap.cs" />
+    <Compile Remove="MappingConfigurations\LoginMap.cs" />
+    <Compile Remove="MappingConfigurations\OrderMap.cs" />
+    <Compile Remove="MappingConfigurations\OrderProductQuantityMap.cs" />
+    <Compile Remove="MappingConfigurations\PricingMap.cs" />
+    <Compile Remove="MappingConfigurations\ProductCategoryMap.cs" />
+    <Compile Remove="MappingConfigurations\ProductMap.cs" />
+    <Compile Remove="MappingConfigurations\ProductRetailerMap.cs" />
+    <Compile Remove="MappingConfigurations\RetailerMap.cs" />
+    <Compile Remove="MappingConfigurations\StoreMap.cs" />
+    <Compile Remove="MappingConfigurations\StoreProductQuantityMap.cs" />
+    <Compile Remove="Migrations\20180929200210_dbInitTest.cs" />
     <Compile Remove="Models\TestDB.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="4.3.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0-preview2-35157" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.0-preview2-35157" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0-preview2-35157" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="2.2.0-preview2-35157" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0-preview2-35157" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.2.0-preview2-35157" />
   </ItemGroup>
 

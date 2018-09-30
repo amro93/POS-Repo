@@ -12,6 +12,8 @@ namespace POS.DAL.MappingConfigurations
         public void Configure(EntityTypeBuilder<Location> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.ToTable("Locations");
+
         }
     }
 }

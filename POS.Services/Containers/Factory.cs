@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using POS.DAL.DBContexts;
 using POS.DAL.GenericClasses;
 using POS.DAL.Interfaces;
@@ -20,11 +21,13 @@ namespace POS.Services.Containers
         public static void CreateBuilder()
         {
             var services = new ServiceCollection();
-            services.AddDbContext<DataContext>();
+            services.AddEntityFrameworkSqlite().AddDbContext<DataContext>();
+            
             services.AddTransient<IDbInitializer, DBInitializer>();
             services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
 
-
+            //services.AddTransient<IInitAppService,InitAppService>();
+            //services.AddTransient<IUserService, UserService>();
             Dictionary<Type, Type> keyValuePairsServices = new Dictionary<Type, Type>();
             var servs = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.Name.EndsWith("Service") && t.IsClass);
@@ -33,7 +36,7 @@ namespace POS.Services.Containers
                 keyValuePairsServices.Add(service, service.GetInterfaces()
                 .FirstOrDefault(l => l.Name == "I" + service.Name));
             }
-            foreach(var service in keyValuePairsServices)
+            foreach (var service in keyValuePairsServices)
             {
                 services.AddTransient(service.Value, service.Key);
             }

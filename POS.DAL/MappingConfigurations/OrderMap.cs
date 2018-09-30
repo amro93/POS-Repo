@@ -12,6 +12,9 @@ namespace POS.DAL.MappingConfigurations
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.HasOne(t => t.Client).WithMany(t => t.Orders).HasForeignKey(t => t.ClientId);
+            builder.ToTable("Orders");
+
         }
     }
 }

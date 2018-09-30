@@ -12,6 +12,12 @@ namespace POS.DAL.MappingConfigurations
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.HasOne(t => t.Client).WithOne(t => t.Person).HasForeignKey<Client>(t => t.PersonId);
+            builder.HasOne(t => t.User).WithOne(t => t.Person).HasForeignKey<Person>(t => t.UserId);
+            builder.HasOne(t => t.Location).WithOne(t => t.Person).HasForeignKey<Location>(t => t.PersonId);
+
+            builder.ToTable("People");
+
         }
     }
 }

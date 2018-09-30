@@ -1,5 +1,4 @@
-﻿using Autofac;
-using POS.Services.Containers;
+﻿using POS.Services.Containers;
 using POS.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace POS_APP.WPF
 {
@@ -24,7 +24,7 @@ namespace POS_APP.WPF
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Factory.CreateBuilder();
-            var appInitService = Factory.Container.Resolve<IInitAppService>();
+            var appInitService = Factory.Container.GetService<IInitAppService>();
             appInitService.InitApp();
         }
     }
