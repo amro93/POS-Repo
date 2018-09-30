@@ -1,4 +1,6 @@
-﻿using System;
+﻿using POS.Services.Containers;
+using POS.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,24 +16,16 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.EntityFrameworkCore;
-using POS_APP.UWP.Views;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-
 using POS_APP.UWP.Views.Login;
-using POS.Services.Interfaces;
-using POS.Services.Containers;
-using POS.Services.Services;
 
-namespace POS_APP.UWP
+namespace POS_App.UWP2
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
     sealed partial class App : Application
     {
-        
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -49,12 +43,9 @@ namespace POS_APP.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //Build Dependancy Injection container Table
             Factory.CreateBuilder();
             var initservice = Factory.Container.GetService<IInitAppService>();
-            //initservice.InitApp();
-            //var appInitService = Factory.Container.Resolve<IInitAppService>();
-            //appInitService.InitApp();
+            initservice.InitApp();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -113,13 +104,5 @@ namespace POS_APP.UWP
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-
-        //private void RegisterServices()
-        //{
-        //    var services = new ServiceCollection();
-        //    services.AddSingleton<IModelConverter<User, LoginVM>, LoginVmConverter>();
-        //    services.AddTransient<LoginVM>();
-        //    Container = services.BuildServiceProvider();
-        //}
     }
 }

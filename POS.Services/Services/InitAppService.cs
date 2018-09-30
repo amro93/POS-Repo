@@ -35,25 +35,29 @@ namespace POS.Services.Services
         {
             //Auto Migrate Database
             dbInitializer.Migrate();
-            //var x = userRepo.Add(new User() { Magic = "123456", Role = Role.SuperAdmin, UserName = "Amro",
-            //    Person = new Person()
-            //    {
-            //        Gender = Gender.Male,
-            //        FirstName = "Amro",
-            //        LastName = "Samy",
-            //        Age = 26,
-            //        Location = new Location()
-            //        {
-            //            Address = "addr"
-            //        },
-            //        Client = new Client()
-            //        {
-                        
-            //        }
-            //    }
-            //});
+            var x = userRepo.Add(new User()
+            {
+                Magic = "123456",
+                Role = Role.SuperAdmin,
+                UserName = "Amro",
+                Person = new Person()
+                {
+                    Gender = Gender.Male,
+                    FirstName = "Amro",
+                    LastName = "Samy",
+                    Age = 26,
+                    Location = new Location()
+                    {
+                        Address = "addr"
+                    },
+                    Client = new Client()
+                    {
 
-            //var y = userRepo.Table;
+                    }
+                }
+            });
+
+            var y = userRepo.Table;
 
         }        
     }

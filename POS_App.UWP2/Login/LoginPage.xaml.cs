@@ -1,6 +1,5 @@
 ﻿using POS.Services.Containers;
 using POS.Services.Interfaces;
-using POS.ViewModels.Login;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Extensions.DependencyInjection;
+using POS.ViewModels.Login;
+using POS_App.UWP2;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -43,7 +44,7 @@ namespace POS_APP.UWP.Views.Login
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Login();
+            Login();
         }
 
         private void PasswordTxtbx_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -53,12 +54,12 @@ namespace POS_APP.UWP.Views.Login
         }
         private void Login()
         {
-            //loginVM.UserName = UserNameTxtbx.Text;
-            //loginVM.Magic = PasswordTxtbx.Text;
-            //if (userService.Logon(loginVM))
-            //{
-            //    (Window.Current.Content as Frame).Navigate(typeof(MainPage));
-            //}
+            loginVM.UserName = UserNameTxtbx.Text;
+            loginVM.Magic = PasswordTxtbx.Text;
+            if (userService.Logon(loginVM))
+            {
+                (Window.Current.Content as Frame).Navigate(typeof(MainPage));
+            }
         }
 
     }
